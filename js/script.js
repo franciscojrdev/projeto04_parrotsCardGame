@@ -19,36 +19,36 @@ function criarCartas() {
     for (let i = 0; cartasJogo.length < quantCartas; i++) {
         cartasJogo.push(cartas[i]);
     }
-    cartasJogo.sort(function comparador() {
-        return Math.random() - 0.5;
-    });
+    cartasJogo.sort(comparador);
 
     for (let i = 0; i < quantCartas; i++) {
         const template = ` 
             <li class="card" onclick="turnCard(this)">
                 <div class="front-face face">
-                    <img src="./img/front.png" alt="Card Back">
+                    <img src="./img/front.png" alt="Card front">
                 </div>
                 <div class="back-face face" >
-                    <img src="./img/${cartasJogo[i]}" alt="Card Front">
+                    <img src="./img/${cartasJogo[i]}" alt="Card back">
                 </div>
             </li>`
         document.querySelector("ul").innerHTML += template;
     }
 }
+function comparador() {
+    return Math.random() - 0.5;
+}
+
 quantidadeCartas();
 criarCartas();
+
 function turnCard(elemento) {
-    // let selecionado = document.querySelectorAll(".card.selecionado");
-    if (elemento.classlist.contains("turn") || secondCard !== undefined) {
-        return;
-    }
     numJogadas++;
-    elemento.classlist.add("turn");
+    elemento.classList.add("click");
     if (firstCard === undefined) {
         firstCard = elemento;
     } else {
         secondCard = elemento;
+
         if (firstCard.innerHTML === secondCard.innerHTML) {
             pares = pares + 2;
             endGame();
@@ -56,30 +56,24 @@ function turnCard(elemento) {
         }
         else {
             setTimeout(function turnCards() {
-                firstCard.classlist.remove("turn");
-                secondCard.classlist.remove("turn");
+                firstCard.classList.remove("click");
+                secondCard.classList.remove("click");
                 reset();
-            }, 1000)
+            }, 1000);
         }
     }
 
 }
+
 function reset() {
     firstCard = undefined;
     secondCard = undefined;
 }
 function endGame() {
     if (pares === quantCartas) {
-        setTimeout(
-            alert(`Você venceu em ${numJogadas}`)
-            , 1000);
+        setTimeout(notificar, 1000);
     }
 }
-
-// if (selecionado[0] === undefined) {
-//     back = elemento.querySelector(".back-face");
-//     front = elemento.querySelector(".front-face");
-//     back.classList.add("back-face-flip");
-//     front.classList.add("front-face-flip");
-//     selecionado.classList.add("selecionado");
-// }
+function notificar() {
+    alert(`Você venceu em ${numJogadas} Jogadas`);
+}
