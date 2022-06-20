@@ -33,7 +33,7 @@ ul {
 	margin: auto 20px 40px 20px;
 }
 
-.back-face > img,.front-face > img {
+.card img{
 	height: 100px;
 	width: 100px;
 	margin: auto;
@@ -50,21 +50,23 @@ ul {
 	align-items: center;
 	justify-content: center;
 	backface-visibility: hidden;
-	transition: all .5s;
+	transition: all .5s ease;
 	transform-style: preserve-3d;
 }
 
-.turn {
+.back-face{
 	transform: rotateY(180deg);
 }
 
-.card:hover .back-face {
+.click .back-face {
 	transform: rotateY(0deg);
 }
 
-.card:hover .front-face {
-	transform: rotateY(-180deg);
+.click .front-face {
+	transform: rotatey(-180deg);
 }
+
+
 
 @media (max-width: 450px) {
 	h1 {
